@@ -3,7 +3,7 @@ import cors from 'cors';
 const app = express(); 
 
 app.use(cors());
-app.use (express.json())
+app.use(express.json());
 
 
 // const user =
@@ -22,40 +22,36 @@ app.use (express.json())
   const users = []
 
 app.post('/sign-up', (req, res) => {
-    const { username, avatar } = req.body;
-    const user = { username, avatar };
-    users.push(user);
-    res.json(user).send('ok');
-  });
-  
+  const { username, avatar } = req.body;
+  const user = { username, avatar };
+  users.push(user);
+  res.json(user).send('ok');
+});
+
 
   const feed = [];
 
 app.post('/tweets', (req, res) => {
-    const { username, tweet} = req.body;
-    const tweets = {username, tweets};
-    const user = users.find(user => user.username === username );
+  const { username, tweet} = req.body;
+  const tweets = {username, tweets};
+  const user = users.find(user => user.username === username );
 
-    if (!user) {
-      res.status(401).send('UNAUTHORIZED');
-      return;
-    }
+  if (!user) {
+    res.status(401).send('UNAUTHORIZED');
+    return;
+  }
 
-    feed.push(tweets);
-    res.json(tweets).send('OK');
-  });
+  feed.push(tweets);
+  res.json(tweets).status(200).send('OK');
+});
 
-app.get('/tweets/latest', (req, res) => {
-    const { username, avatar, tweet} = req.body;
-    const latest = { username, avatar, tweet }
-    const last10 = latest.length > 0 ? latest.slice(-10): [] ;
+app.get('/tweets', (req, res) => {
+  const { username, avatar, tweet} = req.body;
+  const latest = { username, avatar, tweet }
+  const last10 = latest.length > 0 ? latest.slice(-10): [] ;
 
-    res.json(last10);
-  });
-
-
-
-
+  res.json(last10);
+});
 
 app.listen(5000, () =>{
     console.log('o servidor está rodando na porta 5000');
