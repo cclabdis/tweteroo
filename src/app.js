@@ -27,7 +27,7 @@ app.post('/sign-up', (req, res) => {
 });
 
 
-const feed = [];
+const tweets = [];
 
 app.post('/tweets', (req, res) => {
   const { username, tweet} = req.body;
@@ -45,7 +45,7 @@ app.post('/tweets', (req, res) => {
   }
 
   feed.push(tweets);
-  res.status(200).send('OK/CREATED');
+  res.json(tweets).status(200).send('OK/CREATED');
 });
 
 app.get('/tweets', (req, res) => {
