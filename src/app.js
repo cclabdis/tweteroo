@@ -3,6 +3,7 @@ import cors from 'cors';
 const app = express(); 
 
 app.use(cors());
+app.use (express.json())
 
 
 // const user =
@@ -17,11 +18,6 @@ app.use(cors());
 // 	username: "bobesponja",
 //     tweet: "Eu amo hambúrguer de siri!"
 // }
-
-app.get("/", (req, res) => {
-    
-    res.send('Hello World');
-});
 
   const users = []
 
@@ -52,7 +48,7 @@ app.post('/tweets', (req, res) => {
 app.get('/tweets/latest', (req, res) => {
     const { username, avatar, tweet} = req.body;
     const latest = { username, avatar, tweet }
-    const last10= latest.length > 0 ? latest.slice(-10): [] ;
+    const last10 = latest.length > 0 ? latest.slice(-10): [] ;
 
     res.json(last10);
   });
