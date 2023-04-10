@@ -55,7 +55,7 @@ app.get('/tweets', (req, res) => {
   latest.length === 0;
 
   if(latest.length === 0) {
-    res.json(tweets);
+    res.json(feed);
     return;
   }
 
