@@ -27,7 +27,7 @@ app.post('/sign-up', (req, res) => {
 });
 
 
-const tweets = [];
+const feed = [];
 
 app.post('/tweets', (req, res) => {
   const { username, tweet} = req.body;
@@ -55,7 +55,7 @@ app.get('/tweets', (req, res) => {
   latest.length === 0;
 
   if(latest.length === 0) {
-    res.json([]);
+    res.json(tweets);
     return;
   }
 
