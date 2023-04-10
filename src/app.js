@@ -54,7 +54,7 @@ app.get('/tweets', (req, res) => {
   const latest = { username, avatar, tweet };
   const last10 = latest.length > 10 ? latest.slice(-10): latest;
 
-  res.json(last10);
+  res.json(last10.length <= 0 ? [] : last10);
 });
 
 app.listen(5000, () =>{
