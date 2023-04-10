@@ -27,14 +27,14 @@ app.post('/sign-up', (req, res) => {
 });
 
 
-  const feed = [];
+const feed = [];
 
 app.post('/tweets', (req, res) => {
   const { username, tweet} = req.body;
   const tweets = {username, tweets};
   const user = users.find(user => user.username === username);
 
-  if (!isValidUser(user)) {
+  if (!user && !isValidUser(user)) {
     res.status(401).send('UNAUTHORIZED');
     return;
   }
@@ -44,17 +44,22 @@ app.post('/tweets', (req, res) => {
     return;
   }
 
-
   feed.push(tweets);
-  res.json(tweets).status(200).send('OK/CREATED');
+  res.status(200).send('OK/CREATED');
 });
 
 app.get('/tweets', (req, res) => {
   const { username, avatar, tweet} = req.body;
   const latest = { username, avatar, tweet };
-  const last10 = latest.length > 10 ? latest.slice(-10): latest;
+  const last10 = latest.length >= 10 ? latest.slice(-10): latest;
+  latest.length === 0;
 
-  res.json(last10.length <= 0 ? [] : last10);
+  if(latest.length === 0) {
+    res.json([]);
+    return;
+  }
+
+  res.json(last10);
 });
 
 app.listen(5000, () =>{
