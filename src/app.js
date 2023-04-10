@@ -48,7 +48,7 @@ app.post('/tweets', (req, res) => {
 app.get('/tweets', (req, res) => {
   const { username, avatar, tweet} = req.body;
   const latest = { username, avatar, tweet }
-  const last10 = latest.length > 10 ? latest.slice(latest.length - 10): latest ;
+  const last10 = latest.length > 10 ? latest.slice(-10): latest ;
 
   res.json(last10);
 });
