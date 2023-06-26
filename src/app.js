@@ -1,16 +1,18 @@
 import express from 'express';
 import cors from 'cors';
+
+
 const app = express(); 
 
 app.use(cors());
 app.use(express.json());
 
+
+
+
+
 const users = []
 
-function isValidUser(user) {
-  const keys = Object.keys(user);
-  return keys.length === 2 && keys.includes('username') && keys.includes('avatar');
-}
 
 function isValidTweet(tweet) {
   const keys = Object.keys(tweet);
@@ -19,13 +21,14 @@ function isValidTweet(tweet) {
   return keysTest && typeof tweet === 'string' && tweet.length > 0 
 }
 
-app.post('/sign-up', (req, res) => {
+app.post("/sign-up", (req, res) => {
   const { username, avatar } = req.body;
-  const user = { username, avatar };
+  const user = ({ username, avatar });
   users.push(user);
-  res.json(user).send('ok');
-});
+  res.send("ok");
+})
 
+//n esta me retornando ok
 
 const feed = [];
 
@@ -34,18 +37,25 @@ app.post('/tweets', (req, res) => {
   const tweets = {username, tweets};
   const user = users.find(user => user.username === username);
 
-  if (!user && !isValidUser(user)) {
-    res.status(401).send('UNAUTHORIZED');
-    return;
+
+  function isValidUser(user) {
+    const keys = Object.keys(user);
+    return keys.length === 2 && keys.includes('username') && keys.includes('avatar');
   }
+  
+  if (!user && !isValidUser(user)) return res.status(401).send('UNAUTHORIZED')
+
+  
+    
+  feed.push(tweets)
+  res.json(tweets).status(200).send('OK/CREATED');
 
   if(!isValidTweet(tweet)) {
     res.status(400).send('BAD REQUEST');
     return;
   }
 
-  feed.push(tweets);
-  res.json(tweets).status(200).send('OK/CREATED');
+  
 });
 
 app.get('/tweets', (req, res) => {
@@ -62,8 +72,10 @@ app.get('/tweets', (req, res) => {
   res.json(last10);
 });
 
-app.listen(5000, () =>{
-    console.log('o servidor está rodando na porta 5000');
+
+const PORT = 5000;
+app.listen( PORT , () => {
+    console.log(`o servidor está rodando na porta ${PORT}`);
 })
 
 //fuser -k 4000/tcp//

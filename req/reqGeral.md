@@ -26,3 +26,18 @@
           tweet: "Eu amo hambúrguer de siri!"
         }
         ```
+
+
+ - **POST** `/sign-up`
+    - [ ]  Deve receber (pelo `body` da request), um parâmetro **username** e um **avatar**, contendo o nome do username do usuário e a sua foto de avatar:
+    - [ ]  Salvar esse usuário num array de usuários do servidor.
+    - [ ]  Por fim, retornar a mensagem `“OK”`.
+- **POST** `/tweets`
+    - [ ]  Se o usuário não estiver cadastrado (username não fez `sign-up` anteriormente), deve retornar a mensagem `“UNAUTHORIZED”`.
+    - [ ]  Deve receber (pelo `body` da request), os parâmetros `username` e `tweet`:  
+    - [ ]  Salvar esse tweet num array de tweets do servidor.
+    - [ ]  Por fim, retornar a mensagem `“OK”`.
+- **GET** `/tweets`
+    - [ ]  Retornar os 10 últimos tweets publicados
+    - Repare que a informação “avatar” **não vem** da requisição **POST** de `/tweets`. Para retornar o “avatar” na requisição **get** de `/tweets`, você vai precisar obtê-lo de outra forma.
+    - [ ]  Caso não tenha nenhum tweet cadastrado, retorna um array vazio.
