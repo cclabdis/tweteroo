@@ -27,25 +27,24 @@ app.post("/sign-up", (req, res) => {
 app.post("/tweets", (req, res) => {
   const { tweet, username } = req.body;
 
-      if (!username || !tweet) {
-          return res.status(400).send("Todos os campos são obrigatórios!")
-      }
+  if (!username || !tweet) {
+    return res.status(400).send("Todos os campos são obrigatórios!");
+  }
 
-    const userExists = users.find(data => data.username === user)
+  const userExists = users.find(data => data.username === username);
 
-      if (!userExists) {
-          return res.status(401).send("UNAUTHORIZED")
-      }
+  if (!userExists) {
+    return res.status(401).send("UNAUTHORIZED");
+  }
 
-    feed.unshift({ tweet, username })
+  feed.unshift({ tweet, username });
 
-    if (feed.length > 10) {
-        feed.pop()
-    }
+  if (feed.length > 10) {
+    feed.pop();
+  }
 
-    res.status(201).send("OK")
-
-})
+  res.status(201).send("OK");
+});
 
 function getTweets() {
   if (tweets.length < 10) {
