@@ -25,21 +25,19 @@ app.post("/sign-up", (req, res) => {
 
 
 app.post("/tweets", (req, res) => {
+  const { tweet, username } = req.body;
 
-    const tweet = req.body.tweet
-    const user = req.headers.username
-
-    if (!user || !tweet) {
-        return res.status(400).send("Todos os campos são obrigatórios!")
-    }
+      if (!username || !tweet) {
+          return res.status(400).send("Todos os campos são obrigatórios!")
+      }
 
     const userExists = users.find(data => data.username === user)
 
-    if (!userExists) {
-        return res.status(401).send("UNAUTHORIZED")
-    }
+      if (!userExists) {
+          return res.status(401).send("UNAUTHORIZED")
+      }
 
-    feed.unshift({ tweet, user })
+    feed.unshift({ tweet, username })
 
     if (feed.length > 10) {
         feed.pop()
@@ -49,7 +47,19 @@ app.post("/tweets", (req, res) => {
 
 })
 
+app.get("/tweets", (req, res) => {
 
+    const sorted = feed.map(tweet => {
+
+        const user = users.find(item => item.username === tweet.username)
+        const list = { username: tweet.username, tweet: `${tweet.tweet}`, avatar: user.avatar}
+        return list
+
+    })
+
+    res.send(sorted)
+
+})
 
 
 const PORT = 5000;
