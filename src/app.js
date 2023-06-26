@@ -46,23 +46,20 @@ app.post("/tweets", (req, res) => {
   res.status(201).send("OK");
 });
 
-function getTweets() {
-  if (tweets.length < 10) {
-    return tweets;
-  }
-
-  return tweets.slice(-10);
-}
 
 app.get("/tweets", (req, res) => {
-  const sorted = getTweets().map(tweet => {
-    const user = users.find(item => item.username === tweet.username);
-    const list = { username: tweet.username, tweet: `${tweet.tweet}`, avatar: user.avatar };
-    return list;
-  });
 
-  res.send(sorted);
-});
+    const sorted = feed.map(tweet => {
+
+        const user = users.find(item => item.username === tweet.username)
+        const list = { username: tweet.username, tweet: `${tweet.tweet}`, avatar: user.avatar}
+        return list
+
+    })
+
+    res.send(sorted)
+
+})
 
 
 const PORT = 5000;
